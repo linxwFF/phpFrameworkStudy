@@ -71,4 +71,16 @@ class Model extends MYSQLPDO
         $sql = "delete from $this->table where $fields";
         return $this->exec($sql,$data);
     }
+
+    //对LIKE条件转义
+    public static function escapeLike($like)
+    {
+        return strtr($like, ['%' => '\%', '_' => '\_', '\\'=>'\\\\']);
+    }
+
+    //处理SQL语句的Limit部分
+    public static function getLimit($page, $size)
+    {
+        return ($page-1) * $size .',' .$size;
+    }
 }
