@@ -33,7 +33,7 @@ class Framework
         //视图
         define('COMON_VIEW', VIEW_PATH.'common'.DS);
         define('CONTROLLER_VIEW', VIEW_PATH.CONTROLLER.DS);
-        define('ACTION_VIEW', CONTROLLER_VIEW.ACTION.'html');
+        define('ACTION_VIEW', CONTROLLER_VIEW.ACTION.'.html');
     }
 
     private static function _registerAutoLoad()
