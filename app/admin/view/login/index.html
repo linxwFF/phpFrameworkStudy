@@ -1,0 +1,46 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台登录 - 博学谷云课堂</title>
+<link rel="stylesheet" href="public/admin/dashicons.css">
+<link rel="stylesheet" href="public/admin/layout.css">
+<script src="public/admin/jquery.min.js"></script>
+</head>
+<body>
+<div class="top">
+<div class="top-title icon-home">博学谷云课堂</div>
+<div class="top-right">
+	<a href="../" target="_blank">前台首页</a>
+</div>
+</div>
+<div class="login">
+<div class="login-wrap">
+	<a href="../" target="_blank" class="login-logo" title="点击查看前台首页"></a>
+	<div class="tips"></div>
+	<div class="login-box">
+		<form method="post" action="/?m=admin&c=login&token=9b38cd101b41b5351db41b532640c8db">
+		<table>
+			<tr><th>用户名：</th><td><input type="text" name="name" value=""></td></tr>
+			<tr><th>密　码：</th><td><input type="password" name="password"></td></tr>
+			<tr><th>验证码：</th><td><input type="text" name="captcha"></td></tr>
+			<tr><th></th><td><img src="public/admin/captcha/captcha.png" id="captcha" alt="验证码" title="点击刷新验证码"></td></tr>
+			<tr><th></th><td><input type="submit" value="登录"></td></tr>
+		</table>
+		</form>
+	</div>
+</div>
+</div>
+<script>
+//验证码点击刷新
+(function(){
+	var $img = $("#captcha");
+	var src = $img.attr("src")+"&_=";
+	$img.click(function(){
+		$img.attr("src",src+Math.random()); //添加随机数防止浏览器缓存图片
+	});
+})();
+</script>
+</body>
+</html>

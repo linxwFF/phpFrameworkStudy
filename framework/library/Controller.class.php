@@ -7,7 +7,7 @@ class Controller
     //方法不存在时报错
     public function __call($name, $args)
     {
-        Support::E('访问的方法不存在')
+        Support::E('访问的方法不存在');
     }
 
     protected function redirect($url)
@@ -26,6 +26,7 @@ class Controller
         $this->_data[$name] = $value;
     }
 
+    //显示模版VIEW页面
     protected function display()
     {
         extract($this->_data);

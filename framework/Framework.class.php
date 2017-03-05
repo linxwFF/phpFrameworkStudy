@@ -5,6 +5,7 @@ class Framework
     {
         self::_init();  //初始化
         self::_registerAutoLoad();  //自动加载类
+        self::_extend();    //扩展功能
         self::_dispatch();  //分发URL请求
     }
 
@@ -53,9 +54,13 @@ class Framework
 
     private static function _getParams()
     {
-        $m = isset($_POST['m']) ? $_POST['m'] : 'home';
-        $c = isset($_POST['c']) ? $_POST['c'] : 'index';
-        $a = isset($_POST['a']) ? $_POST['a'] : 'index';
+        // $m = isset($_POST['m']) ? $_POST['m'] : 'home';
+        // $c = isset($_POST['c']) ? $_POST['c'] : 'index';
+        // $a = isset($_POST['a']) ? $_POST['a'] : 'index';
+        $m = isset($_GET['m']) ? $_GET['m'] : 'home';
+        $c = isset($_GET['c']) ? $_GET['c'] : 'index';
+        $a = isset($_GET['a']) ? $_GET['a'] : 'index';
+
         return  [$m, $c, $a];
     }
 
@@ -65,5 +70,14 @@ class Framework
         $a = ACTION.'Action';
         $Controller = new $c();
         $Controller->$a();
+    }
+
+    private static function _extend()
+    {
+        //检测POST提交
+        define('IS_POST', $_SERVER['REQUEST_METHOD'] == 'POST');
+        //开启session
+        if(!isset($_SESSION)){ session_start();}
+
     }
 }
