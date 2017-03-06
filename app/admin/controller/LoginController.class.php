@@ -23,7 +23,7 @@ class LoginController extends Controller
                 $this->display();
             }
             Support::session('admin', $userinfo, 'save');   //保存Session中
-            Support::Redirect("/?m=admin");
+            $this->redirect("/?m=admin");
         }else{
             $this->display();
         }
@@ -48,5 +48,13 @@ class LoginController extends Controller
             return strtoupper($captcha) == strtoupper($code);   //对比
         }
         return false;
+    }
+
+
+    //退出登录
+    public function logoutAction()
+    {
+        Support::Session('admin', '', 'unset');
+        $this->redirect("/?m=admin&c=login&a=index");
     }
 }
