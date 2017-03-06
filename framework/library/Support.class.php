@@ -99,4 +99,11 @@ class Support
         }
         return $Model;
     }
+
+    //跳转页面
+    public function Redirect($url)
+    {
+        header("Location:$url");
+        exit();
+    }
 }

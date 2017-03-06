@@ -6,8 +6,9 @@ class LoginController extends Controller
         if(IS_POST){
             $name = Support::Input('name', 'post', 'string');
             $password = Support::Input('password', 'post', 'string');
-            $captcha = true;    //验证码机制待开发
-            if(!$captcha)
+            $captcha = Support::Input('captcha', 'post', 'string');    //验证码机制待开发
+
+            if(!$this->_checkCaptcha($captcha)) //验证验证码
             {
                 $this->tips(false, '验证码错误');
                 $this->display();
@@ -22,10 +23,30 @@ class LoginController extends Controller
                 $this->display();
             }
             Support::session('admin', $userinfo, 'save');   //保存Session中
-            var_dump($_SESSION);
-            echo "登录成功/跳转后台主页面/待开发";
+            Support::Redirect("/?m=admin");
         }else{
             $this->display();
         }
+    }
+
+    //创建验证码
+    public function create_captchaAction()
+    {
+        $captcha = new Captcha();
+        $code = $captcha->code();   //生成验证码code
+        Support::Session('captcha',$code,'save'); //保存验证码CODE到session中
+        $captcha->show($code);
+    }
+
+    //验证验证码
+    private function _checkCaptcha($code)
+    {
+        $captcha = Support::Session('captcha','get');   //获取session中的验证码
+        if(!empty($captcha))
+        {
+            Support::Session('captcha','unset');//删除session中的验证码code
+            return strtoupper($captcha) == strtoupper($code);   //对比
+        }
+        return false;
     }
 }

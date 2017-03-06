@@ -18,14 +18,14 @@
 <div class="login">
 <div class="login-wrap">
 	<a href="../" target="_blank" class="login-logo" title="点击查看前台首页"></a>
-	<div class="tips"></div>
+	<div class="tips"><?=$this->_tips?></div>
 	<div class="login-box">
 		<form method="post" action="/?m=admin&c=login&token=9b38cd101b41b5351db41b532640c8db">
 		<table>
 			<tr><th>用户名：</th><td><input type="text" name="name" value=""></td></tr>
 			<tr><th>密　码：</th><td><input type="password" name="password"></td></tr>
 			<tr><th>验证码：</th><td><input type="text" name="captcha"></td></tr>
-			<tr><th></th><td><img src="public/admin/captcha/captcha.png" id="captcha" alt="验证码" title="点击刷新验证码"></td></tr>
+			<tr><th></th><td><img src="/?m=admin&c=login&a=create_captcha" id="captcha" alt="验证码" title="点击刷新验证码"></td></tr>
 			<tr><th></th><td><input type="submit" value="登录"></td></tr>
 		</table>
 		</form>
