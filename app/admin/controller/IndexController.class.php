@@ -3,6 +3,12 @@ class IndexController extends Controller
 {
     public function IndexAction()
     {
-        echo 123;
+        $this->display();
     }
+
+    public function HomeAction()
+    {
+        $this->display();
+    }
+
 }
