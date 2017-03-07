@@ -83,4 +83,12 @@ class Model extends MYSQLPDO
     {
         return ($page-1) * $size .',' .$size;
     }
+
+    //根据条件检测记录是否存在
+    public function exists($data)
+    {
+        $where = implode(' AND ', self::_fieldsMap(self::_getFields($data)));
+        $sql = "select 1 from ".$this->table." where ".$where;
+        return (bool)$this->fetchColumn($sql, $data);
+    }
 }

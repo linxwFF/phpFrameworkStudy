@@ -29,7 +29,7 @@ class Controller
     //显示模版VIEW页面
     protected function display()
     {
-        extract($this->_data);
+        extract($this->_data);  //提取变量
         $this->_data = [];
         require ACTION_VIEW;
         exit;

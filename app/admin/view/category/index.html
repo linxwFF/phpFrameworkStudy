@@ -1,0 +1,76 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台</title>
+<link rel="stylesheet" href="public/admin/dashicons.css">
+<link rel="stylesheet" href="public/admin/style.css">
+<script src="public/admin/jquery.min.js"></script>
+</head>
+<body>
+<div class="wrap wrap-category">
+<h1>栏目管理</h1>
+<div class="tips"><?=$this->_tips?></div>
+<div class="box">
+<div class="box-body">
+	<form method="post" action="/?m=admin&c=category&token=c15a2f6833d839516c2d95b4ce48456b">
+	<table>
+		<tr><th width="84">显示顺序</th><th>栏目名称</th><th width="120">操作</th></tr>
+		    <!-- 顶级栏目 -->
+            <?php foreach($data[0] as $v) :?>
+			<tr class="hover">
+			  <td class="center"><input type="text" class="s-num" name="save[<?=$v['id']?>][sort]" value="<?=$v['sort']?>"></td>
+			  <td><input type="text" name="save[<?=$v['id']?>][name]" value="<?=$v['name']?>"></td>
+			  <td class="center"><a href="/?m=admin&c=category&exec=del&id=<?=$v['id']?>" class="jq-del">删除</a></td>
+			</tr>
+            <tr><td colspan="3"><i class="icon-sub-add"></i><span class="jq-sub-add s-add" data-id="<?=$v['id']?>"><i class="icon-cross"></i><b>添加子栏目</b></span></td></tr>
+			<!-- 子级栏目 -->
+            <?php if(isset($data[$v['id']])): foreach($data[$v['id']] as $vv) : ?>
+			<tr class="hover">
+			  <td class="center"><input type="text" class="s-num" name="save[<?=$vv['id']?>][sort]" value="<?=$vv['sort']?>"></td>
+			  <td><i class="icon-sub"></i><input type="text" name="save[<?=$vv['id']?>][name]" value="<?=$vv['name']?>"></td>
+			  <td class="center"><a href="/?m=admin&c=category&exec=del&id=<?=$vv['id']?>" class="jq-del">删除</a></td>
+			</tr>
+            <?php endforeach; endif;?>
+            <?php endforeach; ?>
+
+        <tr><td colspan="3"><span class="jq-add s-add"><i class="icon-cross"></i><b>添加新栏目</b></span></td></tr>
+		<tr class="s-act"><td colspan="3"><input type="submit" value="提交更改"></td></tr>
+	</table>
+	</form>
+</div>
+</div>
+</div>
+<script>
+	var add_id = 0; //保存ID计数
+	//添加新栏目
+	$(".jq-add").click(function(){
+		$(this).parents("tr").before('<tr class="hover"><td class="center">\
+		<input type="text" class="s-num" name="add[' + add_id + '][sort]"></td><td colspan="2">\
+		<input type="text" name="add[' + add_id + '][name]">\
+		<input type="hidden" name="add[' + add_id + '][pid]" value="0">\
+		<b class="jq-cancel">取消</b></td></tr>');
+		++add_id;
+	});
+	//添加子栏目
+	$(".jq-sub-add").click(function(){
+		var id = $(this).attr("data-id");
+		$(this).parents("tr").before('<tr class="hover"><td class="center">\
+		<input type="text" class="s-num" name="add[' + add_id + '][sort]"></td><td colspan="2">\
+		<i class="icon-sub"></i><input type="text" name="add[' + add_id + '][name]">\
+		<input type="hidden" name="add['+add_id+'][pid]" value="' + id + '">\
+		<b class="jq-cancel">取消</b></td></tr>');
+		++add_id;
+	});
+	//取消添加
+	$(document).on("click",".jq-cancel",function(){
+		$(this).parents("tr").remove();
+	});
+	//删除前提示
+	$(".jq-del").click(function(){
+		return confirm("您确定要删除此栏目？");
+	});
+</script>
+</body>
+</html>

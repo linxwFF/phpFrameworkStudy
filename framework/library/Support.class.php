@@ -56,7 +56,7 @@ class Support
                 $value = is_string($value) ? $value : '';
                 break;
             case 'html':
-                $value = is_string($value) ? toHTML($value) : '';
+                $value = is_string($value) ? self::toHTML($value) : '';
                 break;
             case 'int': $value = (int)$value; break;
             case 'id': $value = max((int)$value, 0); break;
@@ -69,7 +69,7 @@ class Support
         return $value;
     }
 
-    private function toHTML($str)
+    private static function toHTML($str)
     {
         $str = trim(htmlspecialchars($str, ENT_QUOTES));
         return str_replace(' ', '&nbsp;', $str);
