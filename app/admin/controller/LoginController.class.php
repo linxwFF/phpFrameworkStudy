@@ -25,6 +25,10 @@ class LoginController extends Controller
             Support::session('admin', $userinfo, 'save');   //保存Session中
             $this->redirect("/?m=admin");
         }else{
+            //退出登录提示
+            if('logout' == Support::Input('tips', 'get', 'string')){
+                $this->tips(true,'已成功退出');
+            }
             $this->display();
         }
     }
@@ -54,7 +58,7 @@ class LoginController extends Controller
     //退出登录
     public function logoutAction()
     {
-        Support::Session('admin', '', 'unset');
+        Support::Session('admin', '', 'unset'); //清除验证码防止重复出现
         $this->redirect("/?m=admin&c=login&a=index");
     }
 }
