@@ -16,4 +16,13 @@ class CategoryModel extends Model
         }
         return isset($result[$mode]) ? $result[$mode] : $result;
     }
+
+    //获取栏目下的子栏目
+    public function getSubById($id)
+    {
+        $data = $this->getList('pid');
+        $sub = isset( $data[$id]) ? array_keys($data[$id]) :[];
+        array_unshift($sub, $id);   //将ID放入数组开头
+        return implode(',', $sub);
+    }
 }

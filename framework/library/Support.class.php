@@ -42,14 +42,14 @@ class Support
     }
 
     //接收变量，过滤变量操作
-    public static function Input($var, $method='post', $type='html', $def='')
+    public static function Input($var, $method='post', $type='html', $default='')
     {
         switch($method)
         {
             case 'get': $method = $_GET; break;
             case 'post': $method = $_POST; break;
         }
-        $value = isset($method[$var]) ? $method[$var] : $def;
+        $value = isset($method[$var]) ? $method[$var] : $default;
         switch($type)
         {
             case 'string':

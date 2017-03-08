@@ -12,87 +12,61 @@
 <div class="wrap wrap-course">
 <h1>课程管理</h1>
 <div class="s-nav">
-	<div><select name="category_id">
+	<div>
+        <select name="category_id">
 			<option value="0">所有栏目</option>
-							<option value="1"  >PHP</option>
-									<option value="8"  >—— MySQL</option>
-									<option value="9"  >—— PHP基础</option>
-									<option value="10"  >—— PHP高级</option>
-											<option value="2"  >Java</option>
-											<option value="3"  >iOS</option>
-											<option value="4"  >UI设计</option>
-											<option value="5"  >前端与移动开发</option>
-											<option value="6"  >C/C++</option>
-											<option value="7"  >Python</option>
-									</select>
+            <!-- 顶级栏目 -->
+            <?php foreach($category[0] as $v): ?>
+				<option value="<?=$v['id']?>"  <?= ($v['id'] == $category_id) ? 'selected' : '' ?> > <?=$v['name']?> </option>
+                <!-- 子栏目 -->
+                <?php if(isset($category[$v['id']])) : foreach($category[$v['id']] as $vv) : ?>
+						<option value="<?=$vv['id']?>"  <?= ($vv['id'] == $category_id) ? 'selected' : '' ?> > —— <?=$vv['name']?></option>
+
+            <?php endforeach; endif; ?>
+            <?php endforeach; ?>
+			</select>
 		<input type="button" class="jq-change" value="筛选">
 	</div>
-	<div><select name="order">
-							<option value="time-desc"  >时间降序</option>
-							<option value="time-asc"  >时间升序</option>
-							<option value="show-desc"  >发布状态</option>
-					</select>
+
+	<div>
+        <select name="order">
+            <?php foreach($order_arr as $k=>$v) : ?>
+			<option value="<?=$k?>"  <?=($k==$order)?'selected' : ''?> ><?=$v?></option>
+            <?php endforeach;?>
+		</select>
 		<input type="button" class="jq-change" value="排序">
 	</div>
+
 	<div>
-		<input type="text" name="search" value="" placeholder="输入关键字">
+		<input type="text" name="search" value="<?=$search?>" placeholder="输入关键字">
 		<input type="button" class="jq-change" value="搜索文章">
 	</div>
 </div>
-<div class="tips"></div>
+<div class="tips"><?=$this->_tips?></div>
 <div class="box">
 <div class="box-body">
+<?php  if($data['data']) : ?>
+
 	<table>
 		<tr><th width="80">状态</th><th>课程标题</th><th width="120">所属栏目</th><th width="150">创建时间</th><th width="200">操作</th></tr>
-					<tr>
-				<td class="s-show"><i class="icon-yes">已发布</i></td>
-				<td class="s-title"><a href="/?c=course&id=4" target="_blank">Redis之高性能服务器存储应用</a></td>
-				<td><a href="/?p=admin&c=course&category_id=10">[ PHP高级 ]</a></td>
-				<td>2016-06-17 09:41:14</td>
+        <?php foreach($data['data'] as $v): ?>
+            <tr>
+				<td class="s-show"><i class="<?=($v['show'] == 'yes') ? 'icon-yes' : 'icon-wait'?>"></i> <?=($v['show'] == 'yes') ? '已发布' : '未发布'?> </td>
+				<td class="s-title"><a href="/?c=course&id=<?=$v['id']?>" target="_blank"><?=$v['title']?></a></td>
+				<td><a href="/?m=admin&c=course&category_id=<?=$v['category_id']?>"><?=$v['category_name']?></a></td>
+				<td><?=$v['time']?></td>
 				<td class="s-act">
 					<a href="admin-course-edit.html">课程</a>
 					<a href="admin-video-edit.html">视频</a>
 					<a href="admin-question-edit.html">习题</a>
-					<a href="#" data-id="4" class="jq-del">删除</a>
+					<a href="#" data-id="<?=$v['id']?>" class="jq-del">删除</a>
 				</td>
 			</tr>
-					<tr>
-				<td class="s-show"><i class="icon-yes">已发布</i></td>
-				<td class="s-title"><a href="/?c=course&id=3" target="_blank">Linux网络流媒体服务器</a></td>
-				<td><a href="/?p=admin&c=course&category_id=10">[ PHP高级 ]</a></td>
-				<td>2016-06-17 09:41:14</td>
-				<td class="s-act">
-					<a href="admin-course-edit.html">课程</a>
-					<a href="admin-video-edit.html">视频</a>
-					<a href="admin-question-edit.html">习题</a>
-					<a href="#" data-id="3" class="jq-del">删除</a>
-				</td>
-			</tr>
-					<tr>
-				<td class="s-show"><i class="icon-yes">已发布</i></td>
-				<td class="s-title"><a href="/?c=course&id=2" target="_blank">HTML5微场景应用</a></td>
-				<td><a href="/?p=admin&c=course&category_id=4">[ UI设计 ]</a></td>
-				<td>2016-06-17 09:41:14</td>
-				<td class="s-act">
-					<a href="admin-course-edit.html">课程</a>
-					<a href="admin-video-edit.html">视频</a>
-					<a href="admin-question-edit.html">习题</a>
-					<a href="#" data-id="2" class="jq-del">删除</a>
-				</td>
-			</tr>
-					<tr>
-				<td class="s-show"><i class="icon-yes">已发布</i></td>
-				<td class="s-title"><a href="/?c=course&id=1" target="_blank">PHP未来-Laravel-全栈框架</a></td>
-				<td><a href="/?p=admin&c=course&category_id=10">[ PHP高级 ]</a></td>
-				<td>2016-06-17 09:41:14</td>
-				<td class="s-act">
-					<a href="admin-course-edit.html">课程</a>
-					<a href="admin-video-edit.html">视频</a>
-					<a href="admin-question-edit.html">习题</a>
-					<a href="#" data-id="1" class="jq-del">删除</a>
-				</td>
-			</tr>
-			</table>
+        <?php endforeach; ?>
+	</table>
+    <div class="pagelist"><?=Page::html($data['total'], $page, $size)?></div>
+
+<?php endif;?>
 </div>
 </div>
 <div class="pagelist"></div>
@@ -101,13 +75,13 @@
 (function(){
 	//自动生成URL
 	function getCourseUrl(){
-		var target = '/?p=admin&c=course'; //目标链接
-		var category_id = $('select[name=category_id] option:selected').val();
-		var order = $('select[name=order] option:selected').val();
-		var search = encodeURIComponent($('input[name=search]').val());
+		var target = '/?m=admin&c=course'; //目标链接
+		var category_id = $('select[name=category_id] option:selected').val();    //栏目ID
+		var order = $('select[name=order] option:selected').val();    //排序
+		var search = encodeURIComponent($('input[name=search]').val());   //搜索关键字
 		return target + '&category_id=' + category_id + '&order=' + order + '&search=' + search;
 	}
-	
+
 	//列表功能按钮
 	$(".jq-change").click(function(){
 		location.href = getCourseUrl();
