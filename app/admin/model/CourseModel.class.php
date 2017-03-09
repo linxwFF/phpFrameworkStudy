@@ -18,7 +18,7 @@ class CourseModel extends Model
         }else{ $sql_search = ''; }
 
         $sql_total = 'select count(*) from '. $this->table .' as a '.$sql_where;
-        $sql_data  = 'select a.id, a.category_id, a.title, a.show, a.time, c.name AS category_name from '. $this->table
+        $sql_data  = 'select a.id, a.category_id, a.title, a.publish, a.time, c.name AS category_name from '. $this->table
         .' a left join '. Support::Dtable('category')->table .' as c on a.category_id=c.id '.$sql_where. $sql_order .$sql_limit;
 
         return [
@@ -26,6 +26,13 @@ class CourseModel extends Model
             'total' => $this->fetchColumn($sql_total,['search' => $sql_search]),
             'data' => $this->fetchAll($sql_data, ['search' => $sql_search]),
         ];
+    }
+
+    public function getById($id)
+    {
+        $sql = "select * from $this->table where id = $id limit 0,1";
+        $data = $this->fetchAll($sql);
+        return $data;
     }
 
 

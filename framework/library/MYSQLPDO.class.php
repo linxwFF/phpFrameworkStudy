@@ -37,7 +37,11 @@ class MYSQLPDO
         foreach($data as $v)
         {
             if(false === $stmt->execute($v)){   //执行SQL语句
-                exit('数据库查询失败：.'.implode('-', $stmt->errorInfo()));
+                if(APP_DEBUG){
+					Support::Error('数据库操作失败：'.implode('-',$stmt->errorInfo())."\nSQL语句：".$sql);
+				}else{
+					Support::Error('数据库操作失败');
+				}
             }
         }
         return $stmt;

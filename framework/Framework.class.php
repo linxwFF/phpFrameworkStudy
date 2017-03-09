@@ -17,6 +17,7 @@ class Framework
         define('APP_PATH', ROOT.'app'.DS);  //app路径
         define('FRAMEWORK_PATH', ROOT.'framework'.DS);  //框架路径
         define('LIBRARY_PATH', FRAMEWORK_PATH.'library'.DS);    //类库路径
+        define('EXTEND',LIBRARY_PATH.'extends'.DS);      //扩展的第三方的类库
         define('COMMON_PATH', APP_PATH.'common'.DS);    //公共目录
 
         list($m, $c, $a) = self::_getParams();

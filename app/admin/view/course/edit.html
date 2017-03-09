@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台</title>
+<link rel="stylesheet" href="public/admin/style.css">
+<link rel="stylesheet" href="public/admin/dashicons.css">
+<script src="/public/admin/jquery.min.js"></script>
+<script src="/public/admin/ckeditor/ckeditor.js"></script>
+</head>
+<body>
+<div class="wrap wrap-course-edit">
+<h1>课程管理</h1>
+<?php require COMON_VIEW.'course_edit_tab.html'; ?>
+<div class="tips"><?=$this->_tips?></div>
+<div class="box">
+<div class="box-title">编辑课程</div>
+<div class="box-body">
+<form method="post" action="/?m=admin&c=course&a=edit&id=<?=$id?>" enctype="multipart/form-data">
+    <table class="t-info">
+    	<tr><th width="80">标题：</th><td><input type="text" name="title" value="<?=$data['title']?>"></td></tr>
+    	<tr><th>栏目：</th><td><select name="category_id">
+    		<option value="0">无</option>
+    		<?php foreach($category[0] as $v): ?>
+    			<option value="<?=$v['id']?>" <?=($v['id']==$data['category_id'])?'selected':''?> ><?=$v['name']?></option>
+    			<?php if(isset($category[$v['id']])): foreach($category[$v['id']] as $vv): ?>
+    				<option value="<?=$vv['id']?>" <?=($vv['id']==$data['category_id'])?'selected':''?> >—— <?=$vv['name']?></option>
+    			<?php endforeach; endif; ?>
+    		<?php endforeach; ?>
+    	</select></td></tr>
+    	<tr class="s-price"><th>价格：</th><td><input type="text" name="price" value="<?=$data['price']?>"></td></tr>
+    	<tr class="s-thumb"><th>封面图片：</th><td>
+    		<input type="file" name="thumb"><span>（超过 280*156 图片将被缩小）</span>
+    		<?php if($data['thumb']): ?><img src="/public/upload/<?=$data['thumb']?>" alt="封面图"><?php endif;?>
+    	</td></tr>
+    	<tr class="s-editor"><th>课程介绍：</th><td><textarea name="content"><?=$data['content']?></textarea></td></tr>
+    	<tr class="s-act"><th></th><td><input type="submit" value="立即发布"><input type="submit" value="保存草稿" name="save"></td></tr>
+    </table>
+</form>
+<script src="/public/admin/course.config.js"></script>
+<script>
+CKEDITOR.config.height = 400;
+CKEDITOR.config.width = "100%";
+CKEDITOR.replace("content");
+</script>
+</div>
+</div>
+</div>
+</body>
+</html>

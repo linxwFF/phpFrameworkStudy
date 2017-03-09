@@ -106,4 +106,33 @@ class Support
         header("Location:$url");
         exit();
     }
+
+        /**
+     * 判断上传文件是否成功
+     * @param array $up 上传文件的$_FILES数组元素
+     */
+    public static function check_upload($up){
+    	static $error = [
+    		0 => '非法文件',
+    		1 => '文件大小超过了服务器设置的限制！',
+    		2 => '文件大小超过了表单设置的限制！',
+    		3 => '文件只有部分被上传！',
+    		4 => '没有文件被上传！',
+    		6 => '上传文件临时目录不存在！',
+    		7 => '文件写入失败！'
+    	];
+    	if($up['error']==0 && is_uploaded_file($up['tmp_name'])){
+    		return true;
+    	}
+    	$message = isset($error[$up['error']]) ? $error[$up['error']] : '未知错误';
+    	throw new Exception("文件上传失败：$message");
+    }
+
+    //删除文件
+    public static function del_file($file_path){
+    	if(is_file($file_path)){
+    		unlink($file_path);
+    	}
+    }
+
 }

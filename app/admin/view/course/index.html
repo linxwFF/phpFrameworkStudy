@@ -51,13 +51,13 @@
 		<tr><th width="80">状态</th><th>课程标题</th><th width="120">所属栏目</th><th width="150">创建时间</th><th width="200">操作</th></tr>
         <?php foreach($data['data'] as $v): ?>
             <tr>
-				<td class="s-show"><i class="<?=($v['show'] == 'yes') ? 'icon-yes' : 'icon-wait'?>"></i> <?=($v['show'] == 'yes') ? '已发布' : '未发布'?> </td>
+				<td class="s-show"><i class="<?=($v['publish'] == 1) ? 'icon-yes' : 'icon-wait'?>"></i> <?=($v['publish'] == 1) ? '已发布' : '未发布'?> </td>
 				<td class="s-title"><a href="/?c=course&id=<?=$v['id']?>" target="_blank"><?=$v['title']?></a></td>
 				<td><a href="/?m=admin&c=course&category_id=<?=$v['category_id']?>"><?=$v['category_name']?></a></td>
 				<td><?=$v['time']?></td>
 				<td class="s-act">
-					<a href="admin-course-edit.html">课程</a>
-					<a href="admin-video-edit.html">视频</a>
+					<a href="/?m=admin&c=course&a=edit&id=<?=$v['id']?>">课程</a>
+					<a href="/?m=admin&c=course">视频</a>
 					<a href="admin-question-edit.html">习题</a>
 					<a href="#" data-id="<?=$v['id']?>" class="jq-del">删除</a>
 				</td>
