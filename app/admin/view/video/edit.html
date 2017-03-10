@@ -1,0 +1,70 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台</title>
+<link rel="stylesheet" href="public/admin/style.css">
+<link rel="stylesheet" href="public/admin/dashicons.css">
+<script src="public/admin/jquery.min.js"></script>
+</head>
+<body>
+<div class="wrap wrap-course-edit">
+<h1>课程管理</h1>
+<div class="tab">
+	<a href="/?m=admin&c=course&a=edit&id=<?=$id?>" class="">课程信息</a>
+	<a href="/?m=admin&c=video&a=edit&id=<?=$id?>" class="curr">配置视频</a>
+	<a href="/?m=admin&c=video&a=edit&id=<?=$id?>" class="">配置习题</a>
+</div><div class="tips"></div>
+<div class="box">
+<div class="box-title">配置视频</div>
+<div class="box-body">
+<form method="post" action="/?m=admin&c=video&a=edit&id=<?=$id?>">
+	<table class="v-table">
+		<tr><th width="84">删除</th><th width="40">试看</th><th width="84">排序</th><th>视频名称</th><th>视频地址</th></tr>
+		<tr class="hover">
+			<td><input type="checkbox" class="jq-del" name="del[]" value="<?=$id?>"></td>
+			<td><input type="checkbox" name="save[1][trial]" value="yes" ></td>
+			<td><input type="text" class="v-num" name="save[1][sort]" value="0"></td>
+			<td><input type="text" name="save[1][title]" value="<?=$data['id']?>" required></td>
+			<td><input type="text" class="v-url" name="save[1][url]" value="<?=$data['url']?>" required></td>
+		</tr>
+
+			<tr>
+                <td colspan="5" class="left">
+                    <span class="jq-add s-add"><i class="icon-cross"></i><b>添加视频</b></span>
+                </td>
+            </tr>
+	</table>
+	<input type="submit" value="保存修改">
+</form>
+<script>
+	//添加视频
+	var add_id = 0; //新增ID计数
+	$(".jq-add").click(function(){
+		$(this).parents("tr").before('<tr class="hover"><td><b class="jq-cancel">删除</b></td>\
+		<td><input type="checkbox" name="add['+ add_id +'][trial]" value="yes"></td>\
+		<td><input type="text" class="v-num" name="add['+ add_id +'][sort]"></td>\
+		<td><input type="text" name="add['+ add_id +'][title]" required></td>\
+		<td><input type="text" class="v-url" name="add['+ add_id +'][url]" required></td></tr>');
+		++add_id;
+	});
+	//取消添加
+	$(document).on("click",".jq-cancel",function(){
+		$(this).parents("tr").remove();
+	});
+	//勾选删除
+	$(".jq-del").click(function(){
+		var text = $(this).parents("tr").find("td input[type=text]");
+		if($(this).is(":checked")){
+			text.attr("disabled", "disabled");
+		}else{
+			text.removeAttr("disabled");
+		}
+	});
+</script>
+</div>
+</div>
+</div>
+</body>
+</html>
