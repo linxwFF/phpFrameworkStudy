@@ -11,11 +11,8 @@
 <body>
 <div class="wrap wrap-course-edit">
 <h1>课程管理</h1>
-<div class="tab">
-	<a href="/?m=admin&c=course&a=edit&id=<?=$id?>" class="">课程信息</a>
-	<a href="/?m=admin&c=video&a=edit&id=<?=$id?>" class="curr">配置视频</a>
-	<a href="/?m=admin&c=video&a=edit&id=<?=$id?>" class="">配置习题</a>
-</div><div class="tips"><?=$this->_tips?></div>
+<?php require COMON_VIEW.'course_edit_tab.html'; ?>
+<div class="tips"><?=$this->_tips?></div>
 <div class="box">
 <div class="box-title">配置视频</div>
 <div class="box-body">
