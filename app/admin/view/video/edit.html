@@ -15,29 +15,37 @@
 	<a href="/?m=admin&c=course&a=edit&id=<?=$id?>" class="">课程信息</a>
 	<a href="/?m=admin&c=video&a=edit&id=<?=$id?>" class="curr">配置视频</a>
 	<a href="/?m=admin&c=video&a=edit&id=<?=$id?>" class="">配置习题</a>
-</div><div class="tips"></div>
+</div><div class="tips"><?=$this->_tips?></div>
 <div class="box">
 <div class="box-title">配置视频</div>
 <div class="box-body">
+
+<?php if(isset($data)) : ?>
 <form method="post" action="/?m=admin&c=video&a=edit&id=<?=$id?>">
 	<table class="v-table">
+
+        <?php foreach($data as $v) :?>
 		<tr><th width="84">删除</th><th width="40">试看</th><th width="84">排序</th><th>视频名称</th><th>视频地址</th></tr>
 		<tr class="hover">
-			<td><input type="checkbox" class="jq-del" name="del[]" value="<?=$id?>"></td>
-			<td><input type="checkbox" name="save[1][trial]" value="yes" ></td>
-			<td><input type="text" class="v-num" name="save[1][sort]" value="0"></td>
-			<td><input type="text" name="save[1][title]" value="<?=$data['id']?>" required></td>
-			<td><input type="text" class="v-url" name="save[1][url]" value="<?=$data['url']?>" required></td>
+			<td><input type="checkbox" class="jq-del" name="del[]" value="<?=$v['id']?>"></td>
+			<td><input type="checkbox" name="save[<?=$v['id']?>][trial]" value="<?=$v['trial']?>" <?= $v['trial'] == 'yes'?'checked':'' ?> ></td>
+			<td><input type="text" class="v-num" name="save[<?=$v['id']?>][sort]" value="<?=$v['sort']?>"></td>
+			<td><input type="text" name="save[<?=$v['id']?>][title]" value="<?=$v['title']?>" required></td>
+			<td><input type="text" class="v-url" name="save[<?=$v['id']?>][url]" value="<?=$v['url']?>" required></td>
 		</tr>
 
-			<tr>
-                <td colspan="5" class="left">
-                    <span class="jq-add s-add"><i class="icon-cross"></i><b>添加视频</b></span>
-                </td>
-            </tr>
+        <?php endforeach; ?>
+		<tr>
+            <td colspan="5" class="left">
+                <span class="jq-add s-add"><i class="icon-cross"></i><b>添加视频</b></span>
+            </td>
+        </tr>
+
 	</table>
 	<input type="submit" value="保存修改">
 </form>
+<?php endif; ?>
+
 <script>
 	//添加视频
 	var add_id = 0; //新增ID计数
