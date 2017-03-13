@@ -31,10 +31,10 @@
 	<table class="q-each q-type-single">
 		<tr><th><a href="#" class="q-cancel">取消</a></th>
 		<td><textarea name="add[_ID_][content]" placeholder="输入题干" required></textarea>
-			<span><input type="radio" name="add[_ID_][answer]" value="A" required><input type="text" name="add[_ID_][option][A]" placeholder="选项A" required></span>
-			<span><input type="radio" name="add[_ID_][answer]" value="B" required><input type="text" name="add[_ID_][option][B]" placeholder="选项B" required></span>
-			<span><input type="radio" name="add[_ID_][answer]" value="C" required><input type="text" name="add[_ID_][option][C]" placeholder="选项C" required></span>
-			<span><input type="radio" name="add[_ID_][answer]" value="D" required><input type="text" name="add[_ID_][option][D]" placeholder="选项D" required></span>
+			<span><input type="radio" name="add[_ID_][answer]" value="A" required><input type="text" name="add[_ID_][options][A]" placeholder="选项A" required></span>
+			<span><input type="radio" name="add[_ID_][answer]" value="B" required><input type="text" name="add[_ID_][options][B]" placeholder="选项B" required></span>
+			<span><input type="radio" name="add[_ID_][answer]" value="C" required><input type="text" name="add[_ID_][options][C]" placeholder="选项C" required></span>
+			<span><input type="radio" name="add[_ID_][answer]" value="D" required><input type="text" name="add[_ID_][options][D]" placeholder="选项D" required></span>
 			<input type="hidden" name="add[_ID_][type]" value="single">
 		</td></tr>
 	</table>
@@ -42,10 +42,10 @@
 	<table class="q-each q-type-multiple">
 		<tr><th><a href="#" class="q-cancel">取消</a></th>
 		<td><textarea name="add[_ID_][content]" placeholder="输入题干" required></textarea>
-			<span><input type="checkbox" name="add[_ID_][answer][]" value="A"><input type="text" name="add[_ID_][option][A]" placeholder="选项A" required></span>
-			<span><input type="checkbox" name="add[_ID_][answer][]" value="B"><input type="text" name="add[_ID_][option][B]" placeholder="选项B" required></span>
-			<span><input type="checkbox" name="add[_ID_][answer][]" value="C"><input type="text" name="add[_ID_][option][C]" placeholder="选项C" required></span>
-			<span><input type="checkbox" name="add[_ID_][answer][]" value="D"><input type="text" name="add[_ID_][option][D]" placeholder="选项D" required></span>
+			<span><input type="checkbox" name="add[_ID_][answer][]" value="A"><input type="text" name="add[_ID_][options][A]" placeholder="选项A" required></span>
+			<span><input type="checkbox" name="add[_ID_][answer][]" value="B"><input type="text" name="add[_ID_][options][B]" placeholder="选项B" required></span>
+			<span><input type="checkbox" name="add[_ID_][answer][]" value="C"><input type="text" name="add[_ID_][options][C]" placeholder="选项C" required></span>
+			<span><input type="checkbox" name="add[_ID_][answer][]" value="D"><input type="text" name="add[_ID_][options][D]" placeholder="选项D" required></span>
 			<input type="hidden" name="add[_ID_][type]" value="multiple">
 		</td></tr>
 	</table>
@@ -58,53 +58,23 @@
 		</td></tr>
 	</table>
 </div>
-<form method="post" action="/?p=admin&c=question&a=edit&id=3&token=c15a2f6833d839516c2d95b4ce48456b" id="q_form">
+<form method="post" action="/?m=admin&c=question&a=edit&id=<?=$id?>" id="q_form">
 	<!-- 判断题 -->
 	<div class="q-content">
 		<div class="q-title">判断题<span class="q-toggle">（显示/隐藏）</span></div>
 		<div class="q-wrap q-wrap-binary">
 			<!-- 输出已有的题目 -->
-						<table class="q-each">
-				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="1">删除</label></th>
-				<td><textarea name="save[1][content]" required>使用PHP写好的程序，在Linux和Windows平台上都可以运行。</textarea>
-					<span><label><input type="radio" name="save[1][answer]" value="T" checked required>对</label>
-					<label><input type="radio" name="save[1][answer]" value="F"  required>错</label></span>
-					<input type="hidden" name="save[1][type]" value="binary">
+			<?php foreach($data['binary'] as $k=>$v): ?>
+			<table class="q-each">
+				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="<?=$k?>">删除</label></th>
+				<td><textarea name="save[<?=$k?>][content]" required><?=$v['content']?></textarea>
+					<span><label><input type="radio" name="save[<?=$k?>][answer]" value="T" <?=$v['answer']=='T'?'checked':''?> required>对</label>
+					<label><input type="radio" name="save[<?=$k?>][answer]" value="F" <?=$v['answer']=='F'?'checked':''?> required>错</label></span>
+					<input type="hidden" name="save[<?=$k?>][type]" value="binary">
 				</td></tr>
 			</table>
-						<table class="q-each">
-				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="2">删除</label></th>
-				<td><textarea name="save[2][content]" required>PHP可以支持MySQL数据库，但不支持其它的数据库。</textarea>
-					<span><label><input type="radio" name="save[2][answer]" value="T"  required>对</label>
-					<label><input type="radio" name="save[2][answer]" value="F" checked required>错</label></span>
-					<input type="hidden" name="save[2][type]" value="binary">
-				</td></tr>
-			</table>
-						<table class="q-each">
-				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="3">删除</label></th>
-				<td><textarea name="save[3][content]" required>PHP有很多流行的MVC框架，这些框架可以使PHP的开发更加快捷。</textarea>
-					<span><label><input type="radio" name="save[3][answer]" value="T" checked required>对</label>
-					<label><input type="radio" name="save[3][answer]" value="F"  required>错</label></span>
-					<input type="hidden" name="save[3][type]" value="binary">
-				</td></tr>
-			</table>
-						<table class="q-each">
-				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="4">删除</label></th>
-				<td><textarea name="save[4][content]" required>Zend Studio是PHP中常用的IDE（集成开发环境）。</textarea>
-					<span><label><input type="radio" name="save[4][answer]" value="T" checked required>对</label>
-					<label><input type="radio" name="save[4][answer]" value="F"  required>错</label></span>
-					<input type="hidden" name="save[4][type]" value="binary">
-				</td></tr>
-			</table>
-						<table class="q-each">
-				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="5">删除</label></th>
-				<td><textarea name="save[5][content]" required>进行PHP程序开发时，可以借助软件和工具来提高效率。</textarea>
-					<span><label><input type="radio" name="save[5][answer]" value="T" checked required>对</label>
-					<label><input type="radio" name="save[5][answer]" value="F"  required>错</label></span>
-					<input type="hidden" name="save[5][type]" value="binary">
-				</td></tr>
-			</table>
-					</div>
+			<?php endforeach; ?>
+		</div>
 		<div class="q-act"><span class="jq-add s-add" data-type="binary"><i class="icon-cross"></i><b>添加判断题</b></span></div>
 	</div>
 	<!-- 单选题 -->
@@ -112,57 +82,19 @@
 		<div class="q-title">单选题<span class="q-toggle">（显示/隐藏）</span></div>
 		<div class="q-wrap q-wrap-single">
 			<!-- 输出已有的题目 -->
-						<table class="q-each">
-				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="6">删除</label></th>
-					<td><textarea name="save[6][content]" required>下列选项中，不是URL地址中所包含的信息是（ ）。</textarea>
-					<span><input type="radio" name="save[6][answer]" value="A"  required><input type="text" name="save[6][option][A]" value="主机名" required></span>
-					<span><input type="radio" name="save[6][answer]" value="B"  required><input type="text" name="save[6][option][B]" value="端口号" required></span>
-					<span><input type="radio" name="save[6][answer]" value="C"  required><input type="text" name="save[6][option][C]" value="网络协议" required></span>
-					<span><input type="radio" name="save[6][answer]" value="D" checked required><input type="text" name="save[6][option][D]" value="软件版本" required></span>
-					<input type="hidden" name="save[6][type]" value="single">
+			<?php foreach($data['single'] as $k=>$v): ?>
+			<table class="q-each">
+				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="<?=$k?>">删除</label></th>
+					<td><textarea name="save[<?=$k?>][content]" required><?=$v['content']?></textarea>
+					<span><input type="radio" name="save[<?=$k?>][answer]" value="A" <?=$v['answer']=='A'?'checked':''?> required><input type="text" name="save[<?=$k?>][options][A]" value="<?=$v['options']['A']?>" required></span>
+					<span><input type="radio" name="save[<?=$k?>][answer]" value="B" <?=$v['answer']=='B'?'checked':''?> required><input type="text" name="save[<?=$k?>][options][B]" value="<?=$v['options']['B']?>" required></span>
+					<span><input type="radio" name="save[<?=$k?>][answer]" value="C" <?=$v['answer']=='C'?'checked':''?> required><input type="text" name="save[<?=$k?>][options][C]" value="<?=$v['options']['C']?>" required></span>
+					<span><input type="radio" name="save[<?=$k?>][answer]" value="D" <?=$v['answer']=='D'?'checked':''?> required><input type="text" name="save[<?=$k?>][options][D]" value="<?=$v['options']['D']?>" required></span>
+					<input type="hidden" name="save[<?=$k?>][type]" value="single">
 				</td></tr>
 			</table>
-						<table class="q-each">
-				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="7">删除</label></th>
-					<td><textarea name="save[7][content]" required>PHP是一种（ ）的编程语言。</textarea>
-					<span><input type="radio" name="save[7][answer]" value="A" checked required><input type="text" name="save[7][option][A]" value="解释型" required></span>
-					<span><input type="radio" name="save[7][answer]" value="B"  required><input type="text" name="save[7][option][B]" value="编译型" required></span>
-					<span><input type="radio" name="save[7][answer]" value="C"  required><input type="text" name="save[7][option][C]" value="两者都是" required></span>
-					<span><input type="radio" name="save[7][answer]" value="D"  required><input type="text" name="save[7][option][D]" value="两者都不是" required></span>
-					<input type="hidden" name="save[7][type]" value="single">
-				</td></tr>
-			</table>
-						<table class="q-each">
-				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="8">删除</label></th>
-					<td><textarea name="save[8][content]" required>PHP支持多种风格的标记，以下不是PHP标记的是（ ）。</textarea>
-					<span><input type="radio" name="save[8][answer]" value="A"  required><input type="text" name="save[8][option][A]" value="&lt;?php  ?&gt;" required></span>
-					<span><input type="radio" name="save[8][answer]" value="B"  required><input type="text" name="save[8][option][B]" value="&lt;?     ?&gt;" required></span>
-					<span><input type="radio" name="save[8][answer]" value="C" checked required><input type="text" name="save[8][option][C]" value="&lt;!--    --&gt;" required></span>
-					<span><input type="radio" name="save[8][answer]" value="D"  required><input type="text" name="save[8][option][D]" value="&lt;%    %&gt;" required></span>
-					<input type="hidden" name="save[8][type]" value="single">
-				</td></tr>
-			</table>
-						<table class="q-each">
-				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="9">删除</label></th>
-					<td><textarea name="save[9][content]" required>下列选项中，函数返回的关键字是（ ）。</textarea>
-					<span><input type="radio" name="save[9][answer]" value="A"  required><input type="text" name="save[9][option][A]" value="back" required></span>
-					<span><input type="radio" name="save[9][answer]" value="B"  required><input type="text" name="save[9][option][B]" value="go" required></span>
-					<span><input type="radio" name="save[9][answer]" value="C" checked required><input type="text" name="save[9][option][C]" value="return" required></span>
-					<span><input type="radio" name="save[9][answer]" value="D"  required><input type="text" name="save[9][option][D]" value="break" required></span>
-					<input type="hidden" name="save[9][type]" value="single">
-				</td></tr>
-			</table>
-						<table class="q-each">
-				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="10">删除</label></th>
-					<td><textarea name="save[10][content]" required>PHP中存在多种变量，其中在函数内部定义的变量称之为（ ）。</textarea>
-					<span><input type="radio" name="save[10][answer]" value="A"  required><input type="text" name="save[10][option][A]" value="可变变量" required></span>
-					<span><input type="radio" name="save[10][answer]" value="B" checked required><input type="text" name="save[10][option][B]" value="局部变量" required></span>
-					<span><input type="radio" name="save[10][answer]" value="C"  required><input type="text" name="save[10][option][C]" value="全局变量" required></span>
-					<span><input type="radio" name="save[10][answer]" value="D"  required><input type="text" name="save[10][option][D]" value="内部变量" required></span>
-					<input type="hidden" name="save[10][type]" value="single">
-				</td></tr>
-			</table>
-					</div>
+			<?php endforeach; ?>
+		</div>
 		<div class="q-act"><span class="jq-add s-add" data-type="single"><i class="icon-cross"></i><b>添加单选题</b></span></div>
 	</div>
 	<!-- 多选题 -->
@@ -170,57 +102,19 @@
 		<div class="q-title">多选题<span class="q-toggle">（显示/隐藏）</span></div>
 		<div class="q-wrap q-wrap-multiple">
 			<!-- 输出已有的题目 -->
-						<table class="q-each q-type-multiple">
-				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="11">删除</label></th>
-				<td><textarea name="save[11][content]" required>下列选项中，关于数据类型的说法描述正确的是（ ）。</textarea>
-					<span><input type="checkbox" name="save[11][answer][]" value="A" ><input type="text" name="save[11][option][A]" value="浮点数指的是数学中的小数，不能保存整数" required></span>
-					<span><input type="checkbox" name="save[11][answer][]" value="B" checked><input type="text" name="save[11][option][B]" value="在双引号内的变量会被解析，而单引号内的变量会被原样输出" required></span>
-					<span><input type="checkbox" name="save[11][answer][]" value="C" ><input type="text" name="save[11][option][C]" value="布尔类型只有true和false两个值，且区分大小写" required></span>
-					<span><input type="checkbox" name="save[11][answer][]" value="D" checked><input type="text" name="save[11][option][D]" value="对于整数59可以使用十六进制数0x3b进行表示" required></span>
-					<input type="hidden" name="save[11][type]" value="multiple">
+			<?php foreach($data['multiple'] as $k=>$v): ?>
+			<table class="q-each q-type-multiple">
+				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="<?=$k?>">删除</label></th>
+				<td><textarea name="save[<?=$k?>][content]" required><?=$v['content']?></textarea>
+					<span><input type="checkbox" name="save[<?=$k?>][answer][]" value="A" <?=in_array('A',$v['answer'])?'checked':''?>><input type="text" name="save[<?=$k?>][options][A]" value="<?=$v['options']['A']?>" required></span>
+					<span><input type="checkbox" name="save[<?=$k?>][answer][]" value="B" <?=in_array('B',$v['answer'])?'checked':''?>><input type="text" name="save[<?=$k?>][options][B]" value="<?=$v['options']['B']?>" required></span>
+					<span><input type="checkbox" name="save[<?=$k?>][answer][]" value="C" <?=in_array('C',$v['answer'])?'checked':''?>><input type="text" name="save[<?=$k?>][options][C]" value="<?=$v['options']['C']?>" required></span>
+					<span><input type="checkbox" name="save[<?=$k?>][answer][]" value="D" <?=in_array('D',$v['answer'])?'checked':''?>><input type="text" name="save[<?=$k?>][options][D]" value="<?=$v['options']['D']?>" required></span>
+					<input type="hidden" name="save[<?=$k?>][type]" value="multiple">
 				</td></tr>
 			</table>
-						<table class="q-each q-type-multiple">
-				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="12">删除</label></th>
-				<td><textarea name="save[12][content]" required>下列选项中，可以作为PHP的输出语句的是（ ）。</textarea>
-					<span><input type="checkbox" name="save[12][answer][]" value="A" checked><input type="text" name="save[12][option][A]" value="echo" required></span>
-					<span><input type="checkbox" name="save[12][answer][]" value="B" checked><input type="text" name="save[12][option][B]" value="var_dump" required></span>
-					<span><input type="checkbox" name="save[12][answer][]" value="C" checked><input type="text" name="save[12][option][C]" value="print_r" required></span>
-					<span><input type="checkbox" name="save[12][answer][]" value="D" ><input type="text" name="save[12][option][D]" value="以上答案都不正确" required></span>
-					<input type="hidden" name="save[12][type]" value="multiple">
-				</td></tr>
-			</table>
-						<table class="q-each q-type-multiple">
-				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="13">删除</label></th>
-				<td><textarea name="save[13][content]" required>下面关于if语句的说法正确的是（ ）。</textarea>
-					<span><input type="checkbox" name="save[13][answer][]" value="A" checked><input type="text" name="save[13][option][A]" value="if语句也成为单分支语句" required></span>
-					<span><input type="checkbox" name="save[13][answer][]" value="B" checked><input type="text" name="save[13][option][B]" value="if语句的判断条件是布尔类型数据" required></span>
-					<span><input type="checkbox" name="save[13][answer][]" value="C" ><input type="text" name="save[13][option][C]" value="if语句的判断条件是一个字符串类型数据" required></span>
-					<span><input type="checkbox" name="save[13][answer][]" value="D" ><input type="text" name="save[13][option][D]" value="以上答案都不正确" required></span>
-					<input type="hidden" name="save[13][type]" value="multiple">
-				</td></tr>
-			</table>
-						<table class="q-each q-type-multiple">
-				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="14">删除</label></th>
-				<td><textarea name="save[14][content]" required>下列选项中，可以用来操作数组的运算符是（ ）。</textarea>
-					<span><input type="checkbox" name="save[14][answer][]" value="A" checked><input type="text" name="save[14][option][A]" value="联合 +" required></span>
-					<span><input type="checkbox" name="save[14][answer][]" value="B" ><input type="text" name="save[14][option][B]" value="自增 ++" required></span>
-					<span><input type="checkbox" name="save[14][answer][]" value="C" checked><input type="text" name="save[14][option][C]" value="相等 ==" required></span>
-					<span><input type="checkbox" name="save[14][answer][]" value="D" checked><input type="text" name="save[14][option][D]" value="全等 ===" required></span>
-					<input type="hidden" name="save[14][type]" value="multiple">
-				</td></tr>
-			</table>
-						<table class="q-each q-type-multiple">
-				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="15">删除</label></th>
-				<td><textarea name="save[15][content]" required>若在当前运行的脚本中需要调用其他文件的函数，可以使用以下哪个语句（ ）。</textarea>
-					<span><input type="checkbox" name="save[15][answer][]" value="A" ><input type="text" name="save[15][option][A]" value="import" required></span>
-					<span><input type="checkbox" name="save[15][answer][]" value="B" ><input type="text" name="save[15][option][B]" value="namespace" required></span>
-					<span><input type="checkbox" name="save[15][answer][]" value="C" checked><input type="text" name="save[15][option][C]" value="include" required></span>
-					<span><input type="checkbox" name="save[15][answer][]" value="D" checked><input type="text" name="save[15][option][D]" value="require" required></span>
-					<input type="hidden" name="save[15][type]" value="multiple">
-				</td></tr>
-			</table>
-					</div>
+			<?php endforeach; ?>
+		</div>
 		<div class="q-act"><span class="jq-add s-add" data-type="multiple"><i class="icon-cross"></i><b>添加多选题</b></span></div>
 	</div>
 	<!-- 填空题 -->
@@ -228,21 +122,16 @@
 		<div class="q-title">填空题<span class="q-toggle">（显示/隐藏）</span></div>
 		<div class="q-wrap q-wrap-fill">
 			<!-- 输出已有的题目 -->
-						<table class="q-each q-type-fill">
-				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="16">删除</label></th>
-				<td><textarea name="save[16][content]" required>Apache的httpd服务程序默认使用的是____端口。</textarea>
-					<span><input type="text" name="save[16][answer]" value="80"></span>
-					<input type="hidden" name="save[16][type]" value="fill">
+			<?php foreach($data['fill'] as $k=>$v): ?>
+			<table class="q-each q-type-fill">
+				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="<?=$k?>">删除</label></th>
+				<td><textarea name="save[<?=$k?>][content]" required><?=$v['content']?></textarea>
+					<span><input type="text" name="save[<?=$k?>][answer]" value="<?=$v['answer']?>"></span>
+					<input type="hidden" name="save[<?=$k?>][type]" value="fill">
 				</td></tr>
 			</table>
-						<table class="q-each q-type-fill">
-				<tr><th><label class="q-del"><input type="checkbox" name="del[]" value="17">删除</label></th>
-				<td><textarea name="save[17][content]" required>在PHP中，____函数能将数组转化为字符串。</textarea>
-					<span><input type="text" name="save[17][answer]" value="implode"></span>
-					<input type="hidden" name="save[17][type]" value="fill">
-				</td></tr>
-			</table>
-					</div>
+			<?php endforeach; ?>
+		</div>
 		<div class="q-act"><span class="jq-add s-add" data-type="fill"><i class="icon-cross"></i><b>添加填空题</b></span></div>
 	</div>
 	<input type="submit" value="保存修改" class="jq-submit">

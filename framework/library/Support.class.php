@@ -135,4 +135,15 @@ class Support
     	}
     }
 
+    //富文本过滤
+    public static function HTMLPurifier($html)
+    {
+        static $Purifier = null;
+        if(!$Purifier){
+            require EXTEND.'htmlpurifier'.DS.'HTMLPurifier.standalone.php';
+            $Purifier = new HTMLPurifier();
+        }
+        return $Purifier->purify($html);
+    }
+
 }

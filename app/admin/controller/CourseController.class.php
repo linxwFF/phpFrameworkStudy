@@ -44,7 +44,7 @@ class CourseController extends CommonController
             ];
 
             //富文本管理
-            $data['content'] = $this->HTMLPurifier($data['content']);
+            $data['content'] = Support::HTMLPurifier($data['content']);
             //查处原来的封面图
             $data['thumb'] = $Course->select('thumb', ['id' => $this->id], 'fetchColumn');
 
@@ -72,17 +72,6 @@ class CourseController extends CommonController
         $this->data = $Course->getById($this->id)[0];  //修改后的课程详细数据
         $this->category = Support::Dtable('category')->getList('pid');  //栏目下拉框数据
         $this->display();
-    }
-
-    //富文本过滤
-    public function HTMLPurifier($html)
-    {
-        static $Purifier = null;
-        if(!$Purifier){
-            require EXTEND.'htmlpurifier'.DS.'HTMLPurifier.standalone.php';
-            $Purifier = new HTMLPurifier();
-        }
-        return $Purifier->purify($html);
     }
 
     //上传封面图并生成缩略图
