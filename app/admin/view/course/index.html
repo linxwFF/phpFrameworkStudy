@@ -58,7 +58,7 @@
 				<td class="s-act">
 					<a href="/?m=admin&c=course&a=edit&id=<?=$v['id']?>">课程</a>
 					<a href="/?m=admin&c=video&a=edit&id=<?=$v['id']?>">视频</a>
-					<a href="admin-question-edit.html">习题</a>
+					<a href="/?m=admin&c=question&a=edit&id=<?=$v['id']?>">习题</a>
 					<a href="#" data-id="<?=$v['id']?>" class="jq-del">删除</a>
 				</td>
 			</tr>
@@ -90,7 +90,7 @@
 	$(".jq-del").click(function(){
 		if(confirm("您确定要删除此课程？")){
 			var id = $(this).attr("data-id");
-			location.href = getCourseUrl() + '&page=1&exec=del&id=' + id + '&token=c15a2f6833d839516c2d95b4ce48456b';
+			location.href = getCourseUrl() + '&page=1&exec=del&id=' + id ;
 		}
 		return false;
 	});

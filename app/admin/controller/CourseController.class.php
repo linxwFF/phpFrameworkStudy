@@ -3,6 +3,10 @@ class CourseController extends CommonController
 {
     public function IndexAction()
     {
+        //执行删除操作
+		if('del' == Support::Input('exec','get','string')){
+			$this->_deleteData();
+		}
         //获取列表参数
         $this->category_id = Support::Input('category_id', 'get', 'id');    //栏目ID
         $this->page = Support::Input('page', 'get', 'page');    //页码
@@ -23,11 +27,6 @@ class CourseController extends CommonController
         //获取栏目数据
         $this->category = Support::Dtable('category')->getList('pid');
         $this->display();
-    }
-
-    public function DeleteAction($id)
-    {
-
     }
 
     public function EditAction()
@@ -93,7 +92,7 @@ class CourseController extends CommonController
 	}
 
 	private function _deleteData(){
-		$id = I('id', 'get', 'id');
+		$id = Support::Input('id', 'get', 'id');
         $Course = Support::Dtable('course');
 		//先删除封面图
 		$thumb = $Course->select('thumb', ['id'=>$id], 'fetchColumn');
