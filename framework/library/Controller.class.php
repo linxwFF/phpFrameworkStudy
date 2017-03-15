@@ -3,6 +3,7 @@ class Controller
 {
     private $_data = [];
     private $_tips = '';
+    private $_layout = false; //布局开关
 
     //方法不存在时报错
     public function __call($name, $args)
@@ -31,7 +32,7 @@ class Controller
     {
         extract($this->_data);  //提取变量
         $this->_data = [];
-        require ACTION_VIEW;
+        require $this->_layout ? $this->_layout : ACTION_VIEW; //载入视图
         exit;
     }
 
@@ -43,5 +44,10 @@ class Controller
         }else{
             $this->_tips = "<div class='error'>$tips</div>";
         }
+    }
+
+    //布局开关
+    protected function layout($layout){
+        $this->_layout = $layout;
     }
 }

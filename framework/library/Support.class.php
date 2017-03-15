@@ -84,13 +84,13 @@ class Support
         {
             $class_name = ucwords($name).'Model';
             //存在和模型相关的类则实例化，不存在实例化空模型
-            $Model[$name] = is_file(MODEL_PATH."$class_name.class.php") ? new $class_name($name) : Mempty();
+            $Model[$name] = is_file(MODEL_PATH."$class_name.class.php") ? new $class_name($name) : self::Mempty();
         }
         return $Model[$name];
     }
 
     //实例化空模型
-    public function Mempty()
+    public static function Mempty()
     {
         static $Model = null;
         if(!$Model)

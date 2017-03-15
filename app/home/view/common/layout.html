@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title><?=$title?> - 博学谷云课堂</title>
+<link rel="stylesheet" href="/public/home/style.css">
+<script src="/public/home/jquery.min.js"></script>
+</head>
+<body>
+<!-- 顶部 -->
+<div class="top"><div class="container">
+	<div class="top-left">
+		<a href="#">传智播客首页</a>
+		<a href="#">免费视频下载</a>
+		<a href="#">传智论坛</a>
+		<a href="#">学习光盘</a>
+		<a href="#">学习指南</a>
+	</div>
+	<div class="top-right">
+		欢迎来到博学谷云课堂！
+		<?php if(isset($user)): ?>
+		<?=$user['name']?>
+		<a href="/?c=user" class="light">进入个人中心</a>
+		<a href="/?c=user&a=logout">安全退出</a>
+		<?php else: ?>
+		<a href="/?c=user&a=login" class="light">立即登录</a>
+		<a href="/?c=user&a=register">注册新用户</a>
+		<?php endif; ?>
+	</div>
+</div></div>
+<!-- 头部 -->
+<div class="midnav"><div class="container">
+	<a href="/"><img src="/public/home/logo.png" alt="logo"></a>
+	<span class="midnav-subtxt"></span>
+</div></div>
+<!-- 导航栏 -->
+<div class="nav"><div class="container">
+	<a href="/" data-id="0">首页</a>
+	<?php foreach($nav as $v): ?>
+	<a href="/?a=list&id=<?=$v['id']?>" data-id="<?=$v['id']?>"><?=$v['name']?></a>
+	<?php endforeach; ?>
+</div></div>
+<!-- 内容区域 -->
+<div class="main">
+	<?php require ACTION_VIEW; ?>
+</div>
+<!-- 页脚 -->
+<div class="footer"><div class="container">
+	PHP博学谷云课堂　本系统仅供参考和学习
+</div></div>
+</body>
+</html>
